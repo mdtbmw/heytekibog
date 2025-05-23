@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-pt-20"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founder's Quest™ - Igniting Entrepreneurial Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --heytek-dark-blue: #0A2A4E;
+            --heytek-yellow: #FFC107;
+            --heytek-black: #1A1A1A;
+            --heytek-accent-light-blue: #6CB2EB;
+            --heytek-background-light-gray: #F0F4F8;
+            --heytek-white: #FFFFFF;
+            --heytek-neutral-gray: #B0B0B0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--heytek-background-light-gray); 
+            color: var(--heytek-black); 
+            line-height: 1.6;
+        }
+        .section-padding {
+            padding-top: 4rem; /* 64px */
+            padding-bottom: 4rem; /* 64px */
+        }
+        @media (min-width: 768px) {
+            .section-padding {
+                padding-top: 6rem; /* 96px */
+                padding-bottom: 6rem; /* 96px */
+            }
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; 
+            margin-bottom: 1.5rem; /* mb-6 */
+            color: var(--heytek-dark-blue); 
+            text-align: center;
+        }
+         @media (min-width: 768px) {
+            .section-title {
+                font-size: 3rem; /* text-5xl */
+            }
+        }
+        .section-subtitle { /* For subtitles within sections if needed */
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem; 
+            font-weight: 600; 
+            margin-bottom: 1rem; 
+            color: var(--heytek-dark-blue);
+        }
+        .section-intro-text {
+            font-size: 1.125rem; /* text-lg */
+            color: var(--heytek-black); 
+            margin-bottom: 3rem; /* mb-12 */
+            max-width: 48rem; /* max-w-3xl */
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            opacity: 0.85;
+        }
+
+        .card-base { /* Replaces .stat-card for more generic use */
+            background-color: var(--heytek-white); 
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); /* shadow-md */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb; /* border-gray-200 */
+        }
+        .card-base:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); /* shadow-lg */
+        }
+        
+        .kpi-card { /* Specific styling for the main KPI card */
+            background-color: var(--heytek-dark-blue); 
+            color: var(--heytek-white);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1);
+        }
+        .kpi-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem; 
+            font-weight: 700; 
+        }
+        .kpi-label {
+            font-size: 1rem; 
+            margin-top: 0.25rem; 
+            opacity: 0.8;
+        }
+
+        .flowchart-step {
+            border: 2px solid var(--heytek-dark-blue); 
+            color: var(--heytek-black); 
+            padding: 1rem 1.5rem; /* Increased padding */
+            border-radius: 0.5rem;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 500;
+        }
+        .flowchart-step:nth-child(odd) { background-color: #e0f2f7; } /* Lighter blue tint */
+        .flowchart-step:nth-child(even) { background-color: var(--heytek-background-light-gray); }
+        .flowchart-step:hover { background-color: #cce3e8; transform: translateY(-2px); }
+        .flowchart-arrow { font-size: 2rem; color: var(--heytek-dark-blue); margin: 0.5rem 0; }
+        @media (min-width: 768px) { .flowchart-arrow { margin: 0 1rem; } }
+
+        .timeline-item-container { position: relative; padding-left: 2.5rem; padding-bottom: 2rem; }
+        .timeline-item-container .card-base { border-left: 4px solid var(--heytek-accent-light-blue); }
+        .timeline-dot { position: absolute; left: 0; top: 0.25rem; width: 1rem; height: 1rem; background-color: var(--heytek-dark-blue); border-radius: 50%; border: 3px solid var(--heytek-yellow); }
+        .timeline-line-segment { position: absolute; left: 0.4375rem; top: 1rem; bottom: -2rem; width: 3px; background-color: var(--heytek-accent-light-blue); }
+        .timeline-item-container:last-child .timeline-line-segment { display: none; }
+
+        .usp-table th, .usp-table td { padding: 1rem 0.75rem; text-align: left; border-bottom: 1px solid #e5e7eb; } /* border-gray-200 */
+        .usp-table thead th { background-color: var(--heytek-dark-blue); color: var(--heytek-white); font-weight: 600; }
+        .usp-table tbody tr:hover { background-color: var(--heytek-background-light-gray); }
+        
+        .icon-placeholder { font-size: 1.75rem; margin-right: 0.5rem; color: var(--heytek-dark-blue); } /* Slightly smaller */
+
+        .vision-card { background-color: var(--heytek-dark-blue); color: var(--heytek-background-light-gray); border-left: 5px solid var(--heytek-yellow); padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 1rem; }
+        .vision-card h4 { color: var(--heytek-yellow); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .vision-card ul { list-style-type: disc; padding-left: 1.5rem; }
+        .vision-card li { margin-bottom: 0.5rem; opacity: 0.9; }
+
+        .documentation-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 78, 0.85); backdrop-filter: blur(8px); z-index: 5000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .documentation-modal.active { opacity: 1; visibility: visible; }
+        .documentation-modal-content { background-color: var(--heytek-white); color: var(--heytek-black); border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2), 0 10px 10px -5px rgba(0,0,0,0.1); width: 90%; max-width: 900px; height: 85vh; display: flex; flex-direction: column; transform: scale(0.95); transition: transform 0.3s ease; }
+        .documentation-modal.active .documentation-modal-content { transform: scale(1); }
+        .documentation-modal-header { padding: 1rem 1.5rem; border-bottom: 2px solid var(--heytek-yellow); display: flex; justify-content: space-between; align-items: center; background-color: var(--heytek-dark-blue); color: var(--heytek-background-light-gray); border-top-left-radius: 0.75rem; border-top-right-radius: 0.75rem; }
+        .documentation-modal-header h2 { font-family: 'Orbitron', sans-serif; color: var(--heytek-yellow); font-size: 1.75rem; }
+        .documentation-modal-close-btn { background: none; border: none; color: var(--heytek-yellow); font-size: 2rem; line-height: 1; cursor: pointer; transition: color 0.2s ease; }
+        .documentation-modal-close-btn:hover { color: var(--heytek-white); }
+        .documentation-modal-body { padding: 1.5rem 2rem; overflow-y: auto; flex-grow: 1; }
+        .documentation-modal-body .doc-section { box-shadow: none; padding: 0; margin-bottom: 0; }
+        .doc-section-title-button { background-color: transparent; border: none; padding: 1rem 0; width: 100%; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e7eb; }
+        .doc-section-title-button:hover h2 { color: var(--heytek-accent-light-blue); }
+        .doc-section-title-button h2 { font-size: 1.5rem; margin-bottom: 0; color: var(--heytek-dark-blue); transition: color 0.2s ease; }
+        .doc-section-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out; padding-left: 1rem; }
+        .doc-section-content.expanded { max-height: 2000px; padding-top: 1rem; padding-bottom: 1rem; }
+        .doc-section-title-button .toggle-icon { transition: transform 0.3s ease; font-size: 1.25rem; color: var(--heytek-dark-blue); }
+        .doc-section-title-button.expanded .toggle-icon { transform: rotate(90deg); }
+        .documentation-modal-body .doc-section h3 { font-size: 1.25rem; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--heytek-dark-blue); }
+        .documentation-modal-body .highlight-yellow { color: #D9A107; font-weight: 600; }
+        .documentation-modal-body .highlight-blue { color: #0077B6; font-weight: 600; }
+        .documentation-modal-body .interactive-term { color: var(--heytek-dark-blue); font-weight: 600; border-bottom: 1px dotted var(--heytek-yellow); cursor: default; transition: color 0.2s ease, border-bottom-color 0.2s ease; }
+        .documentation-modal-body .interactive-term:hover { color: var(--heytek-yellow); border-bottom-color: var(--heytek-dark-blue); }
+        .simulated-badge { display: inline-block; background-color: var(--heytek-yellow); color: var(--heytek-dark-blue); font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 0.25rem; margin-left: 0.5rem; vertical-align: middle; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: var(--heytek-background-light-gray); border-radius:10px;}
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--heytek-accent-light-blue); border-radius: 10px;}
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--heytek-dark-blue); }
+        
+        .social-icon { display: inline-block; font-size: 1.5rem; margin: 0 0.5rem; color: var(--heytek-yellow); transition: color 0.2s ease, transform 0.2s ease; }
+        .social-icon:hover { color: var(--heytek-white); transform: scale(1.15); }
+        
+        #backToTopButton { position: fixed; bottom: 20px; right: 20px; background-color: var(--heytek-dark-blue); color: var(--heytek-yellow); border: 2px solid var(--heytek-yellow); border-radius: 50%; width: 50px; height: 50px; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: opacity 0.3s ease, transform 0.3s ease; z-index: 4500; }
+        #backToTopButton:hover { background-color: var(--heytek-yellow); color: var(--heytek-dark-blue); transform: scale(1.1); }
+        
+        .tekerverse-flow-container { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .tekerverse-flow-item { background-color: var(--heytek-dark-blue); color: var(--heytek-background-light-gray); padding: 0.75rem 1.25rem; border-radius: 0.5rem; text-align: center; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 90%; max-width: 300px; }
+        .tekerverse-flow-arrow { font-size: 1.75rem; color: var(--heytek-yellow); transform: rotate(90deg); }
+        @media (min-width: 768px) { 
+            .tekerverse-flow-container { flex-direction: row; justify-content: center; gap: 1rem; }
+            .tekerverse-flow-arrow { transform: rotate(0deg); }
+            .tekerverse-flow-item { width: auto; }
+        }
+        .hero-section { /* New hero style */
+            background: linear-gradient(135deg, var(--heytek-dark-blue) 0%, var(--heytek-accent-light-blue) 100%);
+            color: var(--heytek-white);
+            padding-top: 6rem; /* Increased padding */
+            padding-bottom: 4rem; /* Increased padding */
+            text-align: center;
+            overflow: hidden;
+        }
+         @media (min-width: 768px) {
+            .hero-section {
+                padding-top: 8rem;
+                padding-bottom: 6rem;
+            }
+        }
+        .problem-highlight-card { /* Specific card for the 90% stat */
+            background-color: var(--heytek-white);
+            border: 4px solid var(--heytek-yellow);
+            color: var(--heytek-dark-blue);
+        }
+        .funding-ask-card {
+            border-top: 4px solid var(--heytek-yellow);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    <!-- 
+        Infographic Plan & Visualization Choices:
+
+        Chosen Color Palette: "HeyTek Brand Colors"
+        - HeyTek Dark Blue: #0A2A4E
+        - HeyTek Yellow: #FFC107
+        - HeyTek Black: #1A1A1A (Very Dark Gray for text)
+        - Accent Light Blue: #6CB2EB
+        - Background Light Gray: #F0F4F8
+        - White (for cards/text on dark): #FFFFFF
+        - Neutral Gray (for charts): #B0B0B0
+
+        Narrative & Structure Plan (based on founder_quest_pitch_v2):
+        (Documentation content now integrated into a modal. Navigation menu added.)
+
+        Visualization Choices (Confirming NO SVG and NO MERMAID JS used):
+        (Remains the same, colors updated)
+
+        Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. All visualizations are achieved using Chart.js (Canvas), HTML, and CSS with Tailwind styling, or Font Awesome icons.
+    -->
+    <header class="sticky top-0 z-[4000] bg-opacity-80 backdrop-blur-md bg-[#0A2A4E] text-white shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2 group">
+                <div class="w-10 h-10 bg-gradient-to-br from-[#FFC107] to-[#FDB100] rounded-full flex items-center justify-center text-[#0A2A4E] font-bold text-xl shadow-md transform transition-transform group-hover:scale-110">FQ</div>
+                <span class="font-orbitron text-xl sm:text-2xl text-[#FFC107] group-hover:text-white transition-colors">Founder's Quest™</span>
+            </a>
+
+            <nav class="hidden md:flex space-x-1 lg:space-x-2 items-center text-sm lg:text-base">
+                <a href="#problem" class="px-3 py-2 hover:text-[#FFC107] transition-colors rounded-md hover:bg-white/10">Problem</a>
+                <a href="#solution" class="px-3 py-2 hover:text-[#FFC107] transition-colors rounded-md hover:bg-white/10">Solution</a>
+                <a href="#market" class="px-3 py-2 hover:text-[#FFC107] transition-colors rounded-md hover:bg-white/10">Market</a>
+                <a href="#heytek-vision" class="px-3 py-2 hover:text-[#FFC107] transition-colors rounded-md hover:bg-white/10">Vision</a>
+                <a href="#cta" class="px-3 py-2 hover:text-[#FFC107] transition-colors rounded-md hover:bg-white/10">Invest</a>
+                <button id="openDocumentationButtonNav" class="ml-2 bg-[#FFC107] text-[#0A2A4E] font-semibold py-2 px-4 rounded-md text-sm hover:bg-opacity-90 transition-colors transform hover:scale-105">
+                    Guide
+                </button>
+            </nav>
+
+            <div class="md:hidden">
+                <button id="mobileMenuButton" class="focus:outline-none p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-[#0A2A4E] bg-opacity-95 absolute top-full left-0 right-0 z-30 border-t border-[#FFC107]/30">
+            <nav class="flex flex-col items-center space-y-1 py-4">
+                <a href="#problem" class="block py-3 px-4 hover:text-[#FFC107] transition-colors w-full text-center hover:bg-white/5 rounded-md text-lg">Problem</a>
+                <a href="#solution" class="block py-3 px-4 hover:text-[#FFC107] transition-colors w-full text-center hover:bg-white/5 rounded-md text-lg">Solution</a>
+                <a href="#market" class="block py-3 px-4 hover:text-[#FFC107] transition-colors w-full text-center hover:bg-white/5 rounded-md text-lg">Market</a>
+                <a href="#heytek-vision" class="block py-3 px-4 hover:text-[#FFC107] transition-colors w-full text-center hover:bg-white/5 rounded-md text-lg">Vision</a>
+                <a href="#cta" class="block py-3 px-4 hover:text-[#FFC107] transition-colors w-full text-center hover:bg-white/5 rounded-md text-lg">Invest</a>
+                <button id="openDocumentationButtonMobile" class="mt-4 bg-[#FFC107] text-[#0A2A4E] font-bold py-3 px-8 rounded-lg shadow-md text-lg hover:bg-opacity-90 transition-all w-auto">
+                    Guide
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero-section">
+        <div class="container mx-auto px-6">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black mb-6 tracking-tight text-shadow-lg">Founder's Quest™</h1>
+            <p class="text-xl sm:text-2xl md:text-3xl mb-10 font-light max-w-3xl mx-auto opacity-90">Igniting Entrepreneurial Mastery through Immersive AI Simulation</p>
+            <div class="flex flex-wrap justify-center items-center gap-6">
+                <div class="kpi-card transform hover:scale-105 transition-transform duration-300">
+                    <div class="kpi-value">$75k - $150k</div>
+                    <div class="kpi-label">Seed Funding Sought</div>
+                </div>
+            </div>
+             <p class="mt-10 text-lg max-w-3xl mx-auto opacity-85">
+                A revolutionary, AI-driven startup bootcamp where players don't just learn theory; they <strong class="font-semibold text-[#FFC107]">live it</strong>, building a tangible Business Blueprint. This is a cornerstone of HeyTek Limited's mission to empower entrepreneurs globally.
+            </p>
+        </div>
+    </div>
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-10">
+        <section id="problem" class="section-padding text-center">
+            <h2 class="section-title">The Startup Execution Chasm</h2>
+            <p class="section-intro-text">Millions aspire to entrepreneurship, yet a staggering number of startups fail. The primary culprit is often not a lack of ideas, but a critical gap in strategic execution, practical experience, accessible guidance, and the resilience to overcome early setbacks. Current solutions frequently fall short.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-12 items-stretch">
+                <div class="card-base problem-highlight-card flex flex-col items-center justify-center p-6 md:p-8">
+                    <div class="text-7xl md:text-8xl font-black text-[#0A2A4E] mb-2">90%</div> 
+                    <h3 class="text-xl md:text-2xl font-semibold mb-1 text-[#0A2A4E]">High Failure Rate</h3>
+                    <p class="text-sm text-center">Startups often falter due to avoidable execution errors, not lack of vision.</p>
+                </div>
+                <div class="card-base p-6 md:p-8 border border-gray-200 flex flex-col items-center">
+                    <div class="icon-placeholder mb-3 text-3xl">🎯</div>
+                    <h3 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">Strategic Paralysis</h3> 
+                    <p class="text-sm text-center">Founders struggle to translate vision into a viable, structured plan.</p>
+                </div>
+                <div class="card-base p-6 md:p-8 border border-gray-200 flex flex-col items-center">
+                     <div class="icon-placeholder mb-3 text-3xl">🛠️</div>
+                    <h3 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">Experience Deficit</h3> 
+                    <p class="text-sm text-center">Theoretical knowledge often fails to prepare for real-world pressures.</p>
+                </div>
+                <div class="card-base p-6 md:p-8 border border-gray-300 flex flex-col items-center">
+                     <div class="icon-placeholder mb-3 text-3xl">🤝</div>
+                    <h3 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">Guidance Gap</h3> 
+                    <p class="text-sm text-center">Quality mentorship can be expensive, time-consuming, and inaccessible.</p>
+                </div>
+            </div>
+            <p class="text-lg text-[#1A1A1A] font-medium">The market demands an engaging, accessible, and outcome-oriented platform to bridge this execution chasm.</p>
+        </section>
+
+        <section id="solution" class="section-padding bg-white rounded-2xl shadow-xl">
+            <div class="text-center px-4 sm:px-6">
+                <h2 class="section-title">Our Solution: Founder's Quest™</h2>
+                 <p class="section-intro-text">Founder's Quest™ directly confronts this gap with an immersive AI simulation built upon HeyTek's proprietary iBOG™ Framework, guiding users from idea to a tangible business blueprint.</p>
+            </div>
+
+            <div class="px-4 sm:px-6">
+                <h3 class="section-subtitle text-center mt-8 md:mt-10 mb-6">The iBOG™ Framework: Ideate, Build, Operate, Grow</h3>
+                <p class="text-center text-lg text-[#1A1A1A] mb-10 md:mb-12 max-w-3xl mx-auto">A practical, stage-based methodology integrated into core gameplay, transforming complex startup development into an actionable, learn-by-<strong class="font-semibold text-[#FFC107]">doing</strong> journey.</p>
+                <div class="flex flex-col md:flex-row justify-around items-stretch space-y-6 md:space-y-0 md:space-x-4 lg:space-x-6">
+                    <div class="flowchart-step flex-1"><div class="text-xl md:text-2xl font-bold mb-2 text-[#0A2A4E]">💡 Ideate</div><p class="text-sm">Generate ideas, market research, Lean Canvas, MVV, AI Validation Gauntlet.</p></div>
+                    <div class="flowchart-arrow self-center md:self-auto md:rotate-0 rotate-90">→</div>
+                    <div class="flowchart-step flex-1"><div class="text-xl md:text-2xl font-bold mb-2 text-[#0A2A4E]">🏗️ Build</div><p class="text-sm">Brand identity, core team, define workflows, draft offer page.</p></div>
+                    <div class="flowchart-arrow self-center md:self-auto md:rotate-0 rotate-90">→</div>
+                    <div class="flowchart-step flex-1"><div class="text-xl md:text-2xl font-bold mb-2 text-[#0A2A4E]">⚙️ Operate</div><p class="text-sm">(Simulated) Daily ops, navigate challenges, optimize.</p></div>
+                    <div class="flowchart-arrow self-center md:self-auto md:rotate-0 rotate-90">→</div>
+                    <div class="flowchart-step flex-1"><div class="text-xl md:text-2xl font-bold mb-2 text-[#0A2A4E]">📈 Grow</div><p class="text-sm">(Simulated) Growth strategies, market expansion, launch prep.</p></div>
+                </div>
+            </div>
+
+            <div class="mt-12 md:mt-16 px-4 sm:px-6">
+                <h3 class="section-subtitle text-center mb-6">Key Differentiators</h3>
+                 <p class="text-center text-lg text-[#1A1A1A] mb-10 md:mb-12 max-w-3xl mx-auto">Founder's Quest™ stands apart through its unique blend of AI mentorship, real-world frameworks, tangible outcomes, and unparalleled accessibility.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card-base p-6 border border-gray-200"><h4 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">🤖 AI-Powered TekerBot Mentor</h4><p class="text-sm">24/7 contextual guidance, idea co-creation, and "Idea Incubation" for flagged concepts.</p></div>
+                    <div class="card-base p-6 border border-gray-200"><h4 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">🌍 Real-World iBOG™ Framework</h4><p class="text-sm">Practical, stage-based methodology embedding best practices directly into gameplay.</p></div>
+                    <div class="card-base p-6 border border-gray-200"><h4 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">📄 Tangible Business Blueprint</h4><p class="text-sm">Gameplay culminates in a downloadable, personalized plan for real-world application.</p></div>
+                    <div class="card-base p-6 border border-gray-200"><h4 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">🎮 Deep Experiential Learning</h4><p class="text-sm">Learn by <strong class="font-semibold text-[#FFC107]">doing</strong>, making decisions and seeing their direct impact on key metrics.</p></div>
+                    <div class="card-base p-6 border border-gray-200"><h4 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">🌐 Zero Barrier to Entry</h4><p class="text-sm">Browser-based (HTML, CSS, JS) for maximum accessibility, no installs needed.</p></div>
+                    <div class="card-base p-6 border border-gray-200"><h4 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">🔁 Engaging & Replayable</h4><p class="text-sm">Rich narrative, resource management, and branching consequences ensure high engagement.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="usps" class="section-padding text-center">
+            <h2 class="section-title">Unique Selling Propositions</h2>
+            <p class="section-intro-text">Our distinct advantages create a powerful moat, positioning Founder's Quest™ as a leader in practical entrepreneurial education.</p>
+            <div class="overflow-x-auto shadow-xl rounded-xl bg-white">
+                <table class="min-w-full usp-table">
+                    <thead>
+                        <tr><th>Feature</th><th>Founder's Quest™ Advantage</th><th>Competitive Edge</th></tr>
+                    </thead>
+                    <tbody class="text-[#1A1A1A]">
+                        <tr><td class="font-semibold">iBOG™ Framework</td><td>Structured, proven 4-stage methodology integrated into core gameplay.</td><td>Clear, actionable roadmap unlike generic games; educational and practical.</td></tr>
+                        <tr><td class="font-semibold">AI-Powered TekerBot</td><td>Real-time, contextual mentorship, idea co-creation, "Idea Incubation".</td><td>Personalized guidance at scale, adaptive learning, enhancing user success.</td></tr>
+                        <tr><td class="font-semibold">Validation Gauntlet</td><td>Dynamic AI conversations with diverse stakeholder personas (text & voice).</td><td>Simulates critical feedback loops, building resilience and communication skills.</td></tr>
+                        <tr><td class="font-semibold">Output-Based Learning</td><td>Gameplay contributes to a downloadable Business Blueprint.</td><td>Moves beyond simulation to tangible asset creation, offering real-world value.</td></tr>
+                        <tr><td class="font-semibold">Focus on Resilience</td><td>"Idea Flagged" & "Incubation" mechanics teach learning from failure.</td><td>Unique emphasis on a critical, often overlooked, entrepreneurial skill.</td></tr>
+                        <tr><td class="font-semibold">Scalable B2B Model</td><td>Architected for easy white-labeling and curriculum integration.</td><td>Opens significant revenue streams beyond individual users.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="market" class="section-padding bg-gradient-to-br from-[#0A2A4E] to-[#6CB2EB] text-white rounded-2xl shadow-xl">
+            <div class="text-center px-4 sm:px-6">
+                <h2 class="section-title !text-white">Target Market & Immense Opportunity</h2>
+                <p class="section-intro-text !text-[#F0F4F8] !opacity-90">Founder's Quest™ is strategically positioned at the confluence of several booming global markets, addressing a significant and underserved need for practical, AI-driven entrepreneurial training.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center px-4 sm:px-6">
+                <div class="space-y-6">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4 text-center lg:text-left">Global Market Potential</h3>
+                    <div class="card-base !bg-white/10 backdrop-blur-sm !text-white p-6 border-2 border-gray-500/30"><div class="text-4xl md:text-5xl font-black heytek-yellow-text">580M+</div><p class="font-semibold text-lg">Global Entrepreneurs</p><p class="text-sm opacity-80">Vast pool needing guidance, especially in early stages.</p></div>
+                    <div class="card-base !bg-white/10 backdrop-blur-sm !text-white p-6 border border-gray-500/30"><div class="text-4xl md:text-5xl font-black heytek-yellow-text">$400B+</div><p class="font-semibold text-lg">EdTech Market (by 2027)</p><p class="text-sm opacity-80">Accelerating demand for experiential, skills-based learning.</p></div>
+                    <div class="card-base !bg-white/10 backdrop-blur-sm !text-white p-6 border border-gray-500/30"><div class="text-4xl md:text-5xl font-black heytek-yellow-text">$350B+</div><p class="font-semibold text-lg">Corporate Training Market</p><p class="text-sm opacity-80">Increasing investment in upskilling for innovation.</p></div>
+                </div>
+                <div class="flex flex-col items-center mt-8 lg:mt-0">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center">Primary Target Segments</h3>
+                    <div class="chart-container w-full max-w-md mx-auto h-80 sm:h-96">
+                        <canvas id="targetSegmentsChart"></canvas>
+                    </div>
+                    <p class="text-center mt-4 text-sm opacity-80">(Illustrative Distribution)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="business-model" class="section-padding text-center">
+            <h2 class="section-title">Phased Monetization & Growth</h2>
+            <p class="section-intro-text">Our revenue strategy is designed for scalability and market penetration, evolving from a freemium model to B2B licensing and a comprehensive SaaS platform, ensuring sustainable growth and impact.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="card-base p-6 md:p-8 border border-gray-200"><h3 class="text-xl md:text-2xl font-semibold text-[#0A2A4E] mb-3">Phase 1: Freemium Core</h3><p class="font-bold text-lg mb-2 text-[#6CB2EB]">B2C Focus, Initial B2B</p><ul class="text-sm list-disc list-inside text-left space-y-1 text-[#1A1A1A]"><li class="ml-2">Free access to core game</li><li class="ml-2">Premium (One-time: $29.99-$59.99) for advanced modules, AI reports, Business Blueprint download.</li></ul></div>
+                <div class="card-base p-6 md:p-8 border border-gray-200"><h3 class="text-xl md:text-2xl font-semibold text-[#0A2A4E] mb-3">Phase 2: B2B Licensing</h3><p class="font-bold text-lg mb-2 text-[#6CB2EB]">Educational & Corporate</p><ul class="text-sm list-disc list-inside text-left space-y-1 text-[#1A1A1A]"><li class="ml-2">White-label solutions</li><li class="ml-2">Curriculum integration</li><li class="ml-2">Bulk seat licenses</li></ul></div>
+                <div class="card-base p-6 md:p-8 border border-gray-200"><h3 class="text-xl md:text-2xl font-semibold text-[#0A2A4E] mb-3">Phase 3: SaaS Platform</h3><p class="font-bold text-lg mb-2 text-[#6CB2EB]">Subscription & Community</p><ul class="text-sm list-disc list-inside text-left space-y-1 text-[#1A1A1A]"><li class="ml-2">Founder's Quest™ Pro (Subscription)</li><li class="ml-2">Multiplayer & Startup Leagues</li><li class="ml-2">Advanced analytics & community</li><li class="ml-2">API Access</li></ul></div>
+            </div>
+        </section>
+
+        <section id="tech-stack" class="section-padding bg-white rounded-2xl shadow-xl">
+            <div class="text-center px-4 sm:px-6">
+                <h2 class="section-title">Technology & Innovation</h2>
+                <p class="section-intro-text">Our foundation supports both Founder's Quest™ and the broader HeyTek vision, built with accessible, scalable technologies and powered by cutting-edge AI.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 sm:px-6">
+                <div class="card-base bg-[#F0F4F8] p-6 md:p-8 border border-gray-200">
+                    <h3 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-4">Current Build / Technology</h3>
+                    <ul class="space-y-3 text-[#1A1A1A]">
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">🌐</span> Frontend: HTML, CSS, JavaScript</li>
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">🎨</span> UI Framework: Tailwind CSS</li>
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">🧠</span> AI Engine: Gemini API (TekerBot)</li>
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">💾</span> Data (MVP): LocalStorage</li>
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">☁️</span> Data (Future): Firebase/Supabase</li>
+                    </ul>
+                </div>
+                <div class="card-base bg-[#F0F4F8] p-6 md:p-8 border border-gray-200">
+                    <h3 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-4">Core Innovation Focus</h3>
+                    <ul class="space-y-3 text-[#1A1A1A]">
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">🧭</span> iBOG™ Framework as pedagogical structure</li>
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">🤖</span> TekerBot as adaptive AI mentor & co-creator</li>
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">📄</span> Gameplay to tangible Business Blueprint</li>
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">🛡️</span> Ethical AI & Game Integrity</li>
+                        <li class="flex items-center"><span class="icon-placeholder text-xl">🌌</span> Seamless transition to iBOG SaaS & Tekerverse</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="section-padding text-center">
+            <h2 class="section-title">Development Roadmap</h2>
+            <p class="section-intro-text">Our phased approach ensures continuous improvement, feature expansion, and market adaptation, moving from a polished MVP to a full-fledged SaaS platform integrated within the HeyTek ecosystem.</p>
+            <div class="max-w-3xl mx-auto px-4 sm:px-6">
+                <div class="timeline-item-container">
+                    <div class="timeline-dot"></div><div class="timeline-line-segment"></div>
+                    <div class="card-base ml-4 text-left p-6 border border-gray-200"><h3 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">Phase 1: MVP Polish & Market Ignition</h3><p class="font-bold text-sm text-[#6CB2EB] mb-2">Next 3-4 Months (Seed Funding)</p><p class="text-sm mb-1 text-[#1A1A1A]"><strong>Goal:</strong> Public launch of core single-player game. Refined Ideate phase, initial simulated Build/Operate/Grow.</p><ul class="text-xs list-disc list-inside space-y-1 text-[#1A1A1A]"><li class="ml-2">UI/UX overhaul, mobile responsiveness.</li><li class="ml-2">Deepen TekerBot AI for Ideate phase.</li><li class="ml-2">Implement "Downloadable Business Blueprint" V1.</li><li class="ml-2">Soft launch & gather feedback.</li></ul></div>
+                </div>
+                <div class="timeline-item-container">
+                    <div class="timeline-dot"></div><div class="timeline-line-segment"></div>
+                    <div class="card-base ml-4 text-left p-6 border border-gray-200"><h3 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">Phase 2: Feature Expansion & B2B Pilot</h3><p class="font-bold text-sm text-[#6CB2EB] mb-2">Next 6-9 Months (Post-Seed/Early Revenue)</p><p class="text-sm mb-1 text-[#1A1A1A]"><strong>Goal:</strong> Full interactivity for BUILD phase. Pilot with 2-3 educational institutions/incubators.</p><ul class="text-xs list-disc list-inside space-y-1 text-[#1A1A1A]"><li class="ml-2">Interactive Branding, Team Assembly modules.</li><li class="ml-2">Develop B2B dashboard.</li><li class="ml-2">Integrate advanced user analytics.</li></ul></div>
+                </div>
+                <div class="timeline-item-container">
+                    <div class="timeline-dot"></div>
+                    <div class="card-base ml-4 text-left p-6 border border-gray-200"><h3 class="text-lg md:text-xl font-semibold text-[#0A2A4E] mb-2">Phase 3: Full iBOG™ & SaaS Platform</h3><p class="font-bold text-sm text-[#6CB2EB] mb-2">Next 12-18 Months</p><p class="text-sm mb-1 text-[#1A1A1A]"><strong>Goal:</strong> Full interactivity for OPERATE & GROW phases. Launch Founder's Quest™ Pro SaaS platform.</p><ul class="text-xs list-disc list-inside space-y-1 text-[#1A1A1A]"><li class="ml-2">Interactive Operations, Crisis Management, Market Expansion modules.</li><li class="ml-2">Develop multiplayer/community features.</li><li class="ml-2">Launch subscription model.</li></ul></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="funding" class="section-padding bg-gradient-to-br from-[#0A2A4E] to-[#6CB2EB] text-white rounded-2xl shadow-xl">
+             <div class="text-center px-4 sm:px-6">
+                <h2 class="section-title !text-white">Funding: Fueling the Quest</h2>
+                <p class="section-intro-text !text-[#F0F4F8] !opacity-90">We are seeking $75,000 - $150,000 in seed funding to accelerate development, enhance our AI capabilities, and strategically launch Founder's Quest™ to a global audience.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center px-4 sm:px-6">
+                <div class="text-center lg:text-left funding-ask-card p-6 rounded-lg bg-white/5">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-6 text-[#FFC107]">Seed Round: $75k - $150k</h3>
+                    <p class="text-lg mb-3 !text-[#F0F4F8] !opacity-90">This crucial investment will catalyze our Phase 1 MVP polish and initial launch, and kickstart Phase 2 feature expansion and B2B pilots over the next 9-12 months.</p>
+                    <p class="text-lg !text-[#F0F4F8] !opacity-90">This funding is an investment in a scalable, impactful platform with strong ROI potential, serving as a strategic entry point to the broader HeyTek ecosystem.</p>
+                </div>
+                <div class="flex flex-col items-center mt-8 lg:mt-0">
+                     <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center">Strategic Allocation</h3>
+                    <div class="chart-container w-full max-w-sm mx-auto h-72 sm:h-80">
+                        <canvas id="fundingAllocationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="heytek-vision" class="section-padding bg-white rounded-2xl shadow-xl">
+            <div class="text-center px-4 sm:px-6">
+                <h2 class="section-title">The HeyTek Vision: The <strong class="font-orbitron text-[#FFC107]">Tekerverse</strong> & Beyond</h2>
+                <p class="section-intro-text">Founder's Quest™ is the gateway to the <strong class="font-semibold text-[#FFC107]">Tekerverse</strong> – HeyTek's interconnected ecosystem designed to take entrepreneurs from initial spark to real-world success. It's where simulation meets tangible creation, powered by the iBOG™ Framework and the upcoming iBOG SaaS Platform.</p>
+            </div>
+             <div class="tekerverse-flow-container my-8 px-4">
+                <div class="tekerverse-flow-item">Founder's Quest™ (Blueprint)</div>
+                <div class="tekerverse-flow-arrow">➔</div>
+                <div class="tekerverse-flow-item">iBOG SaaS Platform (Build & Formalize)</div>
+                <div class="tekerverse-flow-arrow">➔</div>
+                <div class="tekerverse-flow-item">Real-World Company (Launch & Scale)</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 sm:px-6 items-start">
+                <div class="card-base p-6 md:p-8 border border-gray-200">
+                    <h3 class="section-subtitle text-left !mb-4 text-[#0A2A4E]">Founder's Quest™: Your Entry to the Tekerverse</h3>
+                    <ul class="list-disc list-inside space-y-2 text-[#1A1A1A] text-left text-sm md:text-base">
+                        <li class="ml-2">A digital embodiment of the iBOG™ methodology.</li>
+                        <li class="ml-2">Risk-free training for the iBOG SaaS Platform.</li>
+                        <li class="ml-2">Generate your initial Business Blueprint.</li>
+                        <li class="ml-2">A powerful lead magnet offering upfront value.</li>
+                        <li class="ml-2">Scalable education for individuals and institutions.</li>
+                    </ul>
+                </div>
+                 <div class="card-base p-6 md:p-8 border border-gray-200">
+                    <h3 class="section-subtitle text-left !mb-4 text-[#0A2A4E]">The iBOG SaaS Platform: Building Real Ventures</h3>
+                    <p class="text-[#1A1A1A] mb-3 text-left text-sm md:text-base">The iBOG SaaS platform is the engine of the Tekerverse. Here, your Founder's Quest™ blueprint transforms:</p>
+                    <ul class="list-disc list-inside space-y-2 text-[#1A1A1A] text-left text-sm md:text-base">
+                        <li class="ml-2">Seamlessly import your game progress.</li>
+                        <li class="ml-2">TekerBot AI generates: websites, full branding kits, operational structures, pitch decks.</li>
+                        <li class="ml-2">Facilitates processes for business registration and corporate account opening.</li>
+                        <li class="ml-2">Integrates with real-world tools (Notion, Stripe, Canva).</li>
+                        <li class="ml-2">The first truly all-in-one business assembly line from vision to victory.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 px-4 sm:px-6">
+                <h3 class="section-subtitle text-center text-[#FFC107] !text-2xl md:!text-3xl">Welcome to the Tekerverse: The Future is Built Here.</h3>
+                <p class="text-lg text-[#1A1A1A] max-w-3xl mx-auto text-center mb-8">The Tekerverse is envisioned as an expansive digital environment where learning, creation, and real-world business development converge. It's more than a platform; it's a universe of opportunity, designed to convert simulated success in Founder's Quest™ into actual, thriving companies through the power of iBOG SaaS.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="vision-card p-6">
+                        <h4>Scalability & Future Innovations:</h4>
+                        <ul>
+                            <li><strong class="font-semibold">Metaverse Integration Concepts:</strong> Exploring persistent worlds where businesses can interact, showcase, and even transact. Think Minecraft for startups, but with real-world business tools.</li>
+                            <li><strong class="font-semibold">Advanced AI Co-Pilots (TekerBot 2.0):</strong> Deeper personalization, predictive analytics for business decisions, and more complex scenario generation.</li>
+                            <li><strong class="font-semibold">Tokenized Assets & Achievements:</strong> Potential for blockchain integration for verifying skills, blueprints, and even fractional ownership in simulated ventures.</li>
+                            <li><strong class="font-semibold">Global Startup Leagues & Competitions:</strong> Large-scale tournaments within the Tekerverse, fostering collaboration and competition.</li>
+                        </ul>
+                    </div>
+                    <div class="vision-card p-6">
+                        <h4>Real-World Integration & Impact:</h4>
+                        <ul>
+                            <li><strong class="font-semibold">iBOG SaaS as the Bridge:</strong> Your Founder's Quest™ blueprint is not just a PDF. It's a live, transferable asset into the iBOG SaaS platform.</li>
+                            <li><strong class="font-semibold">Automated Business Formalization:</strong> iBOG SaaS will guide and automate steps for:
+                                <ul class="mt-1">
+                                    <li>Business registration with government agencies (initially for select regions, expanding globally).</li>
+                                    <li>Facilitation of corporate bank account opening.</li>
+                                </ul>
+                            </li>
+                            <li><strong class="font-semibold">Full Brand & Operational Build-Out:</strong> TekerBot, within iBOG SaaS, will auto-generate essential brand assets (logos, style guides, websites) and operational structures (SOPs, team roles, financial models).</li>
+                            <li><strong class="font-semibold">Acquisition Pathway:</strong> Successfully simulated and structured ventures in iBOG SaaS can be packaged for real-world investment or acquisition, truly converting play into pay.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="section-padding text-center">
+            <h2 class="section-title gradient-text">Join the Quest: Invest in the Future of Innovation!</h2>
+            <p class="section-intro-text text-lg md:text-xl leading-relaxed">Founder's Quest™ is more than a game; it’s a business you build, a future you forge, a generation of innovators you empower. We are creating a transformative platform that demystifies entrepreneurship and makes world-class strategic business education universally accessible and profoundly engaging, all leading into the expansive Tekerverse.</p>
+            
+            <div class="mt-10 md:mt-12">
+                <p class="text-xl md:text-2xl font-semibold text-[#1A1A1A] mb-6">"The future of entrepreneurship is interactive, inclusive, and intelligently guided within the Tekerverse." <br/>- HeyTek Limited</p>
+                <a id="investMailtoLink" 
+                   class="inline-block bg-gradient-to-r from-[#FFC107] to-[#FDB100] hover:from-[#FDB100] hover:to-[#FFC107] text-[#0A2A4E] font-bold py-4 px-8 md:py-5 md:px-12 rounded-lg shadow-2xl text-lg md:text-xl transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#FFD166]">
+                    Partner With Us & Invest
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="heytek-dark-blue-bg text-[#F0F4F8] py-8 text-center">
+        <p class="text-base mb-2">© <span id="currentYearInfographic"></span> HeyTek Limited. All Rights Reserved.</p>
+        <p class="text-sm opacity-80 mb-3">Founder's Quest™ - Igniting Entrepreneurial Mastery.</p>
+        <div class="flex justify-center items-center space-x-3 mb-3">
+            <a href="https://heytek.ng" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="HeyTek Website">
+                <i class="fas fa-globe"></i>
+            </a>
+            <a href="https://twitter.com/heytekltd" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="HeyTek Ltd on Twitter">
+                <i class="fab fa-twitter"></i>
+            </a> 
+            <a href="https://linkedin.com/company/heytekltd" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="HeyTek Ltd on LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://instagram.com/heytekltd" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="HeyTek Ltd on Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com/heytekltd" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="HeyTek Ltd on Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://youtube.com/@heytekltd" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="HeyTek Ltd on YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        <p class="text-sm opacity-80">Connect with us: <strong class="text-[#FFC107]">@heytekltd</strong></p>
+    </footer>
+
+    <div id="documentationModal" class="documentation-modal">
+        <div class="documentation-modal-content">
+            <div class="documentation-modal-header">
+                <h2>Founder's Quest™ Game Guide</h2>
+                <button id="closeDocumentationButton" class="documentation-modal-close-btn" aria-label="Close Documentation">×</button>
+            </div>
+            <div class="documentation-modal-body custom-scrollbar">
+                <section class="doc-section">
+                    <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">Introduction: Welcome, Founder!</h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <p>Welcome to Founder's Quest™, an interactive, AI-powered business simulation game meticulously crafted by Daniel Innocent (@MDTBMW) of HeyTek Limited. This game is designed to immerse you in the entrepreneurial journey, transforming complex startup development into an engaging, educational, and ultimately rewarding experience.</p>
+                        <p>Your mission is to navigate the challenges of building a startup from a raw idea to a successful launch. You'll be guided by the proprietary <strong class="interactive-term" title="Ideate, Build, Operate, Grow - HeyTek's core startup development methodology.">iBOG™ Framework</strong>, making critical decisions, managing resources, and experiencing the direct consequences of your strategic choices.</p>
+                        <p>This guide will walk you through each phase of the game, explaining its objectives, key activities, and how to interact with the game's AI mentors and systems.</p>
+                    </div>
+                </section>
+        
+                <section class="doc-section">
+                     <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">Core Game Mechanics</h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <h3>1. The <span class="interactive-term" title="Ideate, Build, Operate, Grow - HeyTek's core startup development methodology.">iBOG™ Framework</span></h3>
+                        <p>The entire game is structured around HeyTek's iBOG™ Framework, a practical, stage-based methodology for startup development:</p>
+                        <ul>
+                            <li><strong>Ideate:</strong> Clarify, refine, and validate your business idea.</li>
+                            <li><strong>Build:</strong> Construct the foundational elements of your venture – brand, team, and initial offerings.</li>
+                            <li><strong>Operate:</strong> (Currently Simulated) <span class="simulated-badge">SIMULATED</span> Manage daily operations, navigate challenges, and optimize for efficiency.</li>
+                            <li><strong>Grow:</strong> (Currently Simulated) <span class="simulated-badge">SIMULATED</span> Implement growth strategies, explore market expansion, and prepare for launch.</li>
+                        </ul>
+                        <p>Successfully navigating each phase will improve your startup's core metrics and bring you closer to a successful launch.</p>
+            
+                        <h3 title="Key Performance Indicators: Metrics that track your startup's health and progress.">2. Key Performance Indicators (KPIs) / Scores</h3>
+                        <p>Your progress and the health of your startup are measured by four key scores, visible on your main dashboard:</p>
+                        <ul>
+                            <li><strong title="How well-defined and validated your core concept is.">Clarity Score:</strong> Reflects how well-defined, validated, and understood your core business concept, mission, and vision are. Activities in the <strong class="highlight-blue">IDEATE</strong> phase heavily influence this.</li>
+                            <li><strong title="The solidity of your brand, team, and operational setup.">Structure Score:</strong> Measures the solidity of your operational foundation, including your brand identity, team composition, and defined workflows. Influenced primarily by the <strong class="highlight-blue">BUILD</strong> phase.</li>
+                            <li><strong title="Your ability to manage tasks and run the business effectively.">Execution Power:</strong> Represents your ability to manage tasks, run the business effectively, and handle operational challenges. This score is developed in the <strong class="highlight-blue">OPERATE</strong> phase.</li>
+                            <li><strong title="How well your product/service is being received by the target audience.">Market Reception:</strong> Indicates how well your product/service is being received by your target audience and your success in scaling. This is primarily built in the <strong class="highlight-blue">GROW</strong> phase.</li>
+                        </ul>
+                        <p>Each score is crucial, and maintaining a balance is key to overall success. These scores contribute to your "Total Impact" at the end of the game.</p>
+            
+                        <h3>3. <span class="interactive-term" title="The in-game currency used for services and strategic actions.">TekCoins (TC)</span></h3>
+                        <p>TekCoins are the in-game currency of TekVille. You start with an initial balance (e.g., 1000 TC). TekCoins are used for:</p>
+                        <ul>
+                            <li>Consulting with in-game experts like <strong class="highlight-yellow">Daniel Innocent</strong>.</li>
+                            <li>Utilizing specific <span class="interactive-term" title="Your AI mentor in Founder's Quest.">TekerBot</span> AI services (e.g., advanced idea generation, chat).</li>
+                            <li>Potentially other strategic investments or costs as the game evolves.</li>
+                        </ul>
+                        <p>Managing your TekCoins wisely is essential for accessing valuable resources and support throughout your journey.</p>
+            
+                        <h3>4. <span class="interactive-term" title="Your AI mentor in Founder's Quest.">TekerBot</span> - Your AI Mentor</h3>
+                        <p>TekerBot is your primary AI guide and mentor throughout Founder's Quest™. TekerBot will:</p>
+                        <ul>
+                            <li>Provide contextual advice and encouragement at the start of each phase and activity.</li>
+                            <li>Help generate raw business ideas if you choose.</li>
+                            <li>Facilitate the <strong class="highlight-blue">Validation Gauntlet</strong> by simulating stakeholder interactions.</li>
+                            <li>Offer an "Idea Incubation" program if your idea is flagged during validation.</li>
+                            <li>Be available for chat (costing TekCoins) to answer questions about your current phase, the iBOG framework, or general startup advice.</li>
+                            <li>Assist with AI-powered content generation for elements like Mission Statements, Vision Statements, and Taglines (costing TekCoins).</li>
+                        </ul>
+                        <p>Pay attention to TekerBot's insights; they are designed to help you succeed!</p>
+            
+                        <h3>5. Daniel Innocent - Expert Consultant</h3>
+                        <p>Daniel Innocent, the Brand & Operations Strategist from HeyTek Limited, is an in-game expert you can consult. His services provide significant boosts to your startup but require an investment of TekCoins. Available consultations include:</p>
+                        <ul>
+                            <li><strong>Lean Canvas Strategy Session:</strong> Refines your Lean Canvas for maximum clarity.</li>
+                            <li><strong>Mission & Brand Resonance Workshop:</strong> Helps craft a compelling MVV.</li>
+                            <li><strong>Brand Identity Kickstart:</strong> Develops a foundational brand identity.</li>
+                            <li><strong>Core Team Synergy Analysis:</strong> Optimizes your team structure.</li>
+                        </ul>
+                        <p>Consulting Daniel can fast-track certain activities and significantly improve your scores.</p>
+                    </div>
+                </section>
+        
+                <section class="doc-section">
+                    <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">Phase 1: IDEATE - Spark & Validate</h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <p>The IDEATE phase is all about laying a strong conceptual foundation for your venture. The goal is to achieve a high <strong class="highlight-yellow" title="How well-defined and validated your core concept is.">Clarity Score</strong> by defining and validating your business idea.</p>
+            
+                        <h3>1.1 Lean Canvas: Strategic Blueprint</h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To map out the core components of your business model on a one-page strategic diagram.</li>
+                            <li><strong>How it Works:</strong> You'll be presented with "Insight Orbs" representing different business aspects (e.g., Pain Point Focus, Feature X, Subscription Model). Drag these orbs to the corresponding sections of the Lean Canvas (Problem, Solution, Unique Value Proposition, Unfair Advantage, Channels, Customer Segments, Key Metrics, Cost Structure, Revenue Streams).</li>
+                            <li><strong>Completion:</strong> The activity is considered complete once you've mapped at least three orbs. Submitting your canvas finalizes this step.</li>
+                            <li><strong>Consultancy:</strong> Daniel Innocent can help refine your Lean Canvas for 150 TC, auto-completing it with expert insights.</li>
+                        </ul>
+            
+                        <h3>1.2 Define: Mission, Vision & Values (MVV)</h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To articulate the guiding principles of your company.</li>
+                            <li><strong>How it Works:</strong>
+                                <ul>
+                                    <li>Write a <strong class="highlight-blue">Mission Statement</strong> (your "Why").</li>
+                                    <li>Write a <strong class="highlight-blue">Vision Statement</strong> (your "Where").</li>
+                                    <li>Select 3-5 <strong class="highlight-blue">Core Values</strong> (your "How") from a provided list (e.g., Innovation, Integrity, Customer-Centricity).</li>
+                                </ul>
+                            </li>
+                            <li><strong>AI Assistance:</strong> TekerBot can help generate your Mission and Vision statements for a TekCoin fee.</li>
+                            <li><strong>Completion:</strong> This activity is complete once all fields are filled and submitted.</li>
+                            <li><strong>Consultancy:</strong> Daniel Innocent can help craft your MVV for 200 TC.</li>
+                        </ul>
+            
+                        <h3>1.3 Validation Gauntlet: The Market's Verdict</h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To test the viability of your idea by "pitching" it to a simulated stakeholder (customer, investor, or critic) controlled by TekerBot.</li>
+                            <li><strong>How it Works:</strong> You'll engage in a text-based (with optional voice input) conversation. Your responses will directly affect your <strong class="highlight-yellow">Validation Score</strong> (starts at 50%).</li>
+                            <li><strong>Success/Failure:</strong>
+                                <ul>
+                                    <li>If your Validation Score reaches 100% (or stays high after several turns), you pass validation.</li>
+                                    <li>If your Validation Score drops to 0%, your idea is <strong class="highlight-yellow">flagged</strong>.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Idea Flagged & TekerBot Incubation:</strong> If your idea is flagged, you cannot proceed directly. An "Idea Flagged!" modal will appear, prompting you to engage TekerBot for an "Idea Incubation" program. This costs 75 TC and involves:
+                                <ul>
+                                    <li>TekerBot analyzing your failed validation chat.</li>
+                                    <li>Offering practice questions or allowing you to choose your next stakeholder type.</li>
+                                    <li>Once incubation is complete (or you choose a new stakeholder), you re-enter the Validation Gauntlet with a reset score and a new (or similar) stakeholder.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Anti-Cheat:</strong> Switching tabs or suspicious input during active validation may penalize your Validation Score.</li>
+                            <li><strong>Completion:</strong> This activity is marked complete and confirmed only after successfully passing the Validation Gauntlet.</li>
+                        </ul>
+                        <p>To complete the IDEATE phase and proceed to BUILD, all activities (Lean Canvas, MVV, Validation Gauntlet) must be confirmed, and your Clarity Score must be at least 30%.</p>
+                    </div>
+                </section>
+        
+                <section class="doc-section">
+                    <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">Phase 2: BUILD - Construct Your Enterprise</h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <p>With a validated idea, the BUILD phase focuses on creating the tangible assets and structures of your company. The goal is to achieve a strong <strong class="highlight-yellow" title="The solidity of your brand, team, and operational setup.">Structure Score</strong>.</p>
+            
+                        <h3>2.1 Branding Suite: Forge Your Identity</h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To define your company's visual and verbal identity.</li>
+                            <li><strong>How it Works:</strong>
+                                <ul>
+                                    <li>Select a <strong class="highlight-blue">Logo Archetype</strong> (e.g., Modern, Classic, Playful, Minimalist).</li>
+                                    <li>Craft a <strong class="highlight-blue">Tagline</strong> (AI assistance available from TekerBot for TC).</li>
+                                    <li>Choose a <strong class="highlight-blue">Brand Color Palette</strong> (Primary and Secondary colors).</li>
+                                    <li>Select a <strong class="highlight-blue">Brand Typography</strong> style.</li>
+                                    <li>Select 3-5 <strong class="highlight-blue">Key Product Features</strong> from a list.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Completion:</strong> Finalize your choices to complete this activity.</li>
+                            <li><strong>Consultancy:</strong> Daniel Innocent can provide a Brand Identity Kickstart for 300 TC.</li>
+                        </ul>
+            
+                        <h3>2.2 Assemble Core Team: The Architects of Your Vision</h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To hire key leadership roles for your startup.</li>
+                            <li><strong>How it Works:</strong> Drag and drop talent from TekVille's "Available Talent Pool" into the mandatory roles of CEO, CTO, and CMO. An optional COO role is also available. Each character has specific skills and a tooltip describing their strengths.</li>
+                            <li><strong>Skill Match:</strong> The game will indicate the skill match (Good, Okay, Poor) for each assignment.</li>
+                            <li><strong>Completion:</strong> Confirm your team once all mandatory roles are filled.</li>
+                            <li><strong>Consultancy:</strong> Daniel Innocent offers a Core Team Synergy Analysis for 250 TC.</li>
+                        </ul>
+            
+                        <h3>2.3 Define Core Workflow: Operational Blueprint <span class="simulated-badge">SIMULATED</span></h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To outline the key steps in your product/service delivery.</li>
+                            <li><strong>How it Works:</strong> This activity is currently <strong class="highlight-yellow">simulated</strong>. Clicking "Simulate Workflow Definition" will mark it as complete and provide a score boost. Full interactive workflow mapping is planned for future updates.</li>
+                        </ul>
+            
+                        <h3>2.4 Draft Offer Page: Your Digital Handshake <span class="simulated-badge">SIMULATED</span></h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To create a compelling description of your core offer.</li>
+                            <li><strong>How it Works:</strong> This activity is also currently <strong class="highlight-yellow">simulated</strong>. Clicking "Simulate Offer Page Draft" completes it and boosts scores. A full interactive page builder is a future feature.</li>
+                        </ul>
+                        <p>To complete the BUILD phase and proceed to OPERATE, all activities must be confirmed, and your Structure Score must be at least 25%.</p>
+                    </div>
+                </section>
+        
+                <section class="doc-section">
+                     <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">Phase 3: OPERATE - Manage & Optimize <span class="simulated-badge">SIMULATED</span></h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <p>The OPERATE phase is where you manage the day-to-day running of your business. The primary goal is to build your <strong class="highlight-yellow" title="Your ability to manage tasks and run the business effectively.">Execution Power Score</strong>.</p>
+                        <h3>3.1 Daily Operations: The Grind & The Glory (Simulated)</h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To simulate managing daily tasks, responding to market changes, handling crises, and keeping your team motivated.</li>
+                            <li><strong>How it Works:</strong> This entire phase is currently <strong class="highlight-yellow">simulated</strong>. Clicking "Simulate Operations Cycle" will complete the activity, affect your Execution Score, and potentially your TekCoins balance.</li>
+                            <li><strong>Future:</strong> Full interactive operational challenges, decision-making scenarios, and resource management are planned for future updates.</li>
+                        </ul>
+                        <p>To complete the OPERATE phase and proceed to GROW, this simulated activity must be confirmed, and your Execution Power must be at least 25%.</p>
+                    </div>
+                </section>
+        
+                <section class="doc-section">
+                    <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">Phase 4: GROW - Scale & Conquer <span class="simulated-badge">SIMULATED</span></h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <p>In the GROW phase, your focus shifts to scaling your venture and expanding your market reach. The aim is to improve your <strong class="highlight-yellow" title="How well your product/service is being received by the target audience.">Market Reception Score</strong>.</p>
+                        <h3>4.1 Market Expansion: Reach New Horizons (Simulated)</h3>
+                        <ul>
+                            <li><strong>Objective:</strong> To simulate launching marketing campaigns, exploring new customer segments or geographical markets, and optimizing operations for growth.</li>
+                            <li><strong>How it Works:</strong> This phase is currently <strong class="highlight-yellow">simulated</strong>. Clicking "Simulate Growth Initiatives" completes the activity, impacting your Market Reception Score and TekCoins.</li>
+                            <li><strong>Future:</strong> Full interactive growth strategy challenges, marketing campaign management, and simulated investor pitches are planned.</li>
+                        </ul>
+                        <p>To complete the GROW phase and LAUNCH your company, this simulated activity must be confirmed, and your Market Reception Score must be at least 25%.</p>
+                    </div>
+                </section>
+        
+                <section class="doc-section">
+                    <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">Endgame: LAUNCHED! & Your <span class="interactive-term" title="A downloadable summary of your game progress and strategic choices.">Business Blueprint</span></h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <p>Congratulations, Founder! Completing all four phases of the iBOG™ framework means you have successfully launched your startup in TekVille.</p>
+                        <ul>
+                            <li><strong>Final Scores:</strong> Your dashboard will display your final scores for Clarity, Structure, Execution, and Market Reception, along with your Total Impact score and remaining TekCoins.</li>
+                            <li><strong>Achievements:</strong> Any achievements unlocked during your playthrough will be noted.</li>
+                            <li><strong>Business Blueprint:</strong> The most valuable reward! You'll be able to <strong class="highlight-yellow">download a Business Blueprint</strong>. This document (simulated as a text/JSON output in the current version) summarizes all the key decisions, strategies, and definitions you made throughout your Founder's Quest™ journey (e.g., company name, idea, Lean Canvas details, MVV, branding choices, team).</li>
+                            <li><strong>Play Again:</strong> You can choose to restart the game and build a new legacy with a different idea or strategy.</li>
+                        </ul>
+                    </div>
+                </section>
+        
+                <section class="doc-section">
+                    <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">The <span class="interactive-term" title="HeyTek's interconnected ecosystem for entrepreneurs.">Tekerverse</span>: Connecting to a Larger World</h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <p>Founder's Quest™ is more than just a standalone game; it's envisioned as the gateway to the <strong class="highlight-yellow">Tekerverse</strong> – HeyTek Limited's broader interconnected ecosystem for entrepreneurs.</p>
+                        <p>The Business Blueprint you generate in Founder's Quest™ is designed to be a foundational asset. In the future, HeyTek plans to allow this blueprint to be seamlessly imported into the <strong class="highlight-blue">iBOG SaaS Platform</strong>. This platform will be a comprehensive business transformation engine, helping you take your validated concepts from Founder's Quest™ and develop them into real-world ventures with advanced tools, AI-driven asset generation (websites, branding, operational structures), and even guidance on formalization processes like business registration and corporate account opening.</p>
+                        <p>Your journey in Founder's Quest™ is the first step in a much larger adventure of creation and innovation within the Tekerverse!</p>
+                    </div>
+                </section>
+        
+                <section class="doc-section">
+                    <button class="doc-section-title-button" aria-expanded="false">
+                        <h2 class="text-xl md:text-2xl">Tips for Success</h2>
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="doc-section-content">
+                        <ul>
+                            <li><strong>Pay Attention to TekerBot:</strong> Its advice is tailored to help you.</li>
+                            <li><strong>Manage TekCoins Wisely:</strong> Expert consultations can be game-changers, but they cost TC.</li>
+                            <li><strong>Iterate and Learn:</strong> Don't be afraid if your idea is flagged in the Validation Gauntlet. Use TekerBot's Incubation to refine it. Resilience is key!</li>
+                            <li><strong>Aim for Balanced Scores:</strong> While each phase focuses on a primary score, decisions can impact multiple KPIs.</li>
+                            <li><strong>Read Tooltips:</strong> Many elements in the game have tooltips offering extra information or hints.</li>
+                            <li><strong>Have Fun!</strong> Entrepreneurship is a challenging but exciting quest.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <button id="backToTopButton" aria-label="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+
+    <script>
+        const palette = {
+            heyTekDarkBlue: '#0A2A4E',
+            heyTekYellow: '#FFC107',
+            heyTekBlack: '#1A1A1A',
+            accentLightBlue: '#6CB2EB',
+            backgroundLightGray: '#F0F4F8',
+            white: '#FFFFFF',
+            neutralGray: '#B0B0B0' 
+        };
+
+        function wrapLabel(str, maxWidth = 16) {
+            if (typeof str !== 'string') return '';
+            if (str.length <= maxWidth) {
+                return str;
+            }
+            const words = str.split(' ');
+            let currentLine = '';
+            const lines = [];
+            for (const word of words) {
+                if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+        
+        const defaultTooltipCallbacks = {
+            title: function(tooltipItems) {
+                const item = tooltipItems[0];
+                if (!item || !item.chart || !item.chart.data || !item.chart.data.labels || typeof item.dataIndex === 'undefined') return '';
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                  return label.join(' ');
+                } else if (typeof label === 'string') {
+                  return label;
+                }
+                return '';
+            }
+        };
+
+        const targetSegmentsCtx = document.getElementById('targetSegmentsChart');
+        if (targetSegmentsCtx) {
+            new Chart(targetSegmentsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        wrapLabel('Aspiring & Early-Stage Entrepreneurs'), 
+                        wrapLabel('Educational Institutions'), 
+                        wrapLabel('Startup Ecosystem Enablers'), 
+                        wrapLabel('Corporate Innovation Programs')
+                    ],
+                    datasets: [{
+                        label: 'Target Segments',
+                        data: [45, 25, 20, 10], 
+                        backgroundColor: [palette.heyTekDarkBlue, palette.accentLightBlue, palette.heyTekYellow, palette.neutralGray],
+                        borderColor: [palette.white], 
+                        borderWidth: 2, 
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: palette.white, font: { size: 11 } } 
+                        },
+                        tooltip: { 
+                            callbacks: defaultTooltipCallbacks,
+                            backgroundColor: palette.heyTekBlack,
+                            titleFont: { size: 13, weight: 'bold'}, 
+                            bodyFont: { size: 11 }, 
+                            padding: 8, 
+                            cornerRadius: 4
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
+
+        const fundingAllocationCtx = document.getElementById('fundingAllocationChart');
+        if (fundingAllocationCtx) {
+            new Chart(fundingAllocationCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        wrapLabel('Product Development & AI'), 
+                        wrapLabel('Marketing & Community'), 
+                        wrapLabel('B2B Pilot Program'), 
+                        wrapLabel('Operational & Contingency')
+                    ],
+                    datasets: [{
+                        label: 'Funding Allocation',
+                        data: [40, 30, 20, 10],
+                        backgroundColor: [palette.heyTekDarkBlue, palette.accentLightBlue, palette.heyTekYellow, palette.neutralGray],
+                        borderColor: [palette.white], 
+                        borderWidth: 2,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                             labels: { color: palette.white, font: {size: 11} } 
+                        },
+                        tooltip: { 
+                            callbacks: defaultTooltipCallbacks,
+                            backgroundColor: palette.heyTekBlack,
+                            titleFont: { size: 13, weight: 'bold'},
+                            bodyFont: { size: 11 },
+                            padding: 8,
+                            cornerRadius: 4
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
+
+        const openDocumentationButtonNav = document.getElementById('openDocumentationButtonNav');
+        const openDocumentationButtonMobile = document.getElementById('openDocumentationButtonMobile');
+        const closeDocumentationButton = document.getElementById('closeDocumentationButton');
+        const documentationModal = document.getElementById('documentationModal');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const investMailtoLink = document.getElementById('investMailtoLink');
+        const backToTopButton = document.getElementById('backToTopButton');
+
+        function toggleDocumentationModal(show) {
+            if (documentationModal) {
+                if (show) {
+                    documentationModal.classList.add('active');
+                } else {
+                    documentationModal.classList.remove('active');
+                }
+            }
+        }
+
+        if (openDocumentationButtonNav) {
+            openDocumentationButtonNav.addEventListener('click', () => toggleDocumentationModal(true));
+        }
+        if (openDocumentationButtonMobile) {
+            openDocumentationButtonMobile.addEventListener('click', () => {
+                toggleDocumentationModal(true);
+                if (mobileMenu) mobileMenu.classList.add('hidden'); 
+            });
+        }
+        if (closeDocumentationButton) {
+            closeDocumentationButton.addEventListener('click', () => toggleDocumentationModal(false));
+        }
+        if (documentationModal) {
+            documentationModal.addEventListener('click', (event) => {
+                if (event.target === documentationModal) toggleDocumentationModal(false);
+            });
+        }
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.querySelectorAll('a, button').forEach(item => { 
+                item.addEventListener('click', () => {
+                    if (!item.id.includes('openDocumentationButtonMobile')) { 
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+        }
+
+        if (investMailtoLink) {
+            const email = "heyteklimited@gmail.com"; 
+            const subject = encodeURIComponent("Investment Inquiry - Founder's Quest™ & Tekerverse");
+            const body = encodeURIComponent(
+`Dear HeyTek Team,
+
+I recently reviewed the Founder's Quest™ infographic and I am very impressed with the vision for both the game and the broader Tekerverse ecosystem.
+
+I am particularly interested in learning more about:
+[Please specify - e.g., investment opportunities, partnership possibilities, the iBOG SaaS platform, educational applications, etc.]
+
+My background is in [Your Industry/Area of Expertise], and I see significant potential in [Mention specific area of synergy or interest].
+
+Could you please provide more information on [Your specific question, e.g., the next steps for investors, how to get involved, details on the roadmap]?
+
+I would appreciate the opportunity to discuss this further.
+
+Thank you for your time and innovative work.
+
+Sincerely,
+
+[Your Name]
+[Your Title/Organization, if applicable]
+[Your Contact Information - Phone/Website]`
+            );
+            investMailtoLink.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        }
+
+        if (document.getElementById('currentYearInfographic')) {
+            document.getElementById('currentYearInfographic').textContent = new Date().getFullYear();
+        }
+
+        
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                if(backToTopButton) backToTopButton.style.display = "flex"; 
+            } else {
+                if(backToTopButton) backToTopButton.style.display = "none";
+            }
+        };
+
+        if(backToTopButton) {
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Collapsible sections in documentation modal
+        const collapsibleTitles = document.querySelectorAll('.documentation-modal-body .doc-section-title-button');
+        collapsibleTitles.forEach(titleButton => {
+            titleButton.addEventListener('click', () => {
+                const content = titleButton.nextElementSibling;
+                const icon = titleButton.querySelector('.toggle-icon i');
+                const isExpanded = titleButton.getAttribute('aria-expanded') === 'true';
+
+                if (isExpanded) {
+                    content.classList.remove('expanded');
+                    titleButton.setAttribute('aria-expanded', 'false');
+                    if(icon) icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
+                } else {
+                    // Close other expanded sections first
+                    collapsibleTitles.forEach(otherTitle => {
+                        if (otherTitle !== titleButton && otherTitle.getAttribute('aria-expanded') === 'true') {
+                            otherTitle.nextElementSibling.classList.remove('expanded');
+                            otherTitle.setAttribute('aria-expanded', 'false');
+                            const otherIcon = otherTitle.querySelector('.toggle-icon i');
+                            if(otherIcon) otherIcon.classList.replace('fa-chevron-down', 'fa-chevron-right');
+                        }
+                    });
+                    content.classList.add('expanded');
+                    titleButton.setAttribute('aria-expanded', 'true');
+                    if(icon) icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>
